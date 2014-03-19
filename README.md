@@ -9,11 +9,13 @@ Dependencies
 
 Events
 ------
-
+* swipe
 * swipeleft
 * swiperight
 * swipeup
 * swipedown
+
+The generic **swipe** event is triggered always, it holds the swipe direction with in the detail property of the event.
 
 
 Usage
@@ -24,12 +26,13 @@ Include the swipable.js script:
 ```
     <script src="swipable.js"></script>
 
-    <div id="slider">
-        <ul>
-            <li>...</li>
-            ...
-        </ul>
-    </div>
+    <style type="text/css">
+    	#slider {
+        	background-color: #999999;
+        }
+    </style>
+
+    <div id="slider">swipe here</div>
     
     <script type="text/javascript">
 
@@ -50,6 +53,10 @@ Include the swipable.js script:
         slider.addEventListener('swipedown', function() {
            console.log('swiped down');
         }, false);
+        
+        slider.addEventListener('swipe', function(event) {
+           console.log('swiped to the ', e.detail.direction);
+        }, false);        
         
     </script>
 ```
