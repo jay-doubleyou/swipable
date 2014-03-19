@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+    <title>swipable.js - demo file</title>
+    <head>
+        <script src="src/swipable.js"></script>
+        <style type="text/css">
+
+            h1 {
+                text-align: center;
+            }
+
+            #slider {
+                background-color: #999999;
+                height : 600px;
+                text-align: center;
+                font-size: 3em;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>swipable.js DEMO</h1>
+        <div id="slider">swipe here</div>
+
+        <script type="text/javascript">
+
+            var slider = new Swipable(document.getElementById('slider'));
+
+            slider.addEventListener('swiperight', function() {
+                console.log('swiped right');
+            }, false);
+
+            slider.addEventListener('swipeleft', function() {
+                console.log('swiped left');
+            }, false);
+
+            slider.addEventListener('swipeup', function() {
+                console.log('swiped up');
+            }, false);
+
+            slider.addEventListener('swipedown', function() {
+                console.log('swiped down');
+            }, false);
+
+            slider.addEventListener('swipe', function(e) {
+                console.log('swiped to the ', e.detail.direction);
+            }, false);
+
+        </script>
+    </body>
+</html>
