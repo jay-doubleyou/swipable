@@ -53,3 +53,5 @@ Include the swipable.js script:
         
     </script>
 ```
+
+swipeable.js is distributed under the [MIT License](http://opensource.org/licenses/MIT).
