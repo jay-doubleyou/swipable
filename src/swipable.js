@@ -1,5 +1,5 @@
 /**
- * swipable.js v0.1.0
+ * swipable.js v0.2.0
  *
  * 2014-03-19
  *
@@ -7,6 +7,20 @@
  * http://www.opensource.org/licenses/mit-license.php
  *
  */
+
+(function () {
+    function CustomEvent ( event, params ) {
+        params = params || { bubbles: false, cancelable: false, detail: undefined };
+        var evt = document.createEvent( 'CustomEvent' );
+        evt.initCustomEvent( event, params.bubbles, params.cancelable, params.detail );
+        return evt;
+    };
+
+    CustomEvent.prototype = window.Event.prototype;
+
+    window.CustomEvent = CustomEvent;
+})();
+
 ;( function(window) {
 
     'use strict';
@@ -133,39 +147,18 @@
      */
     Swipable.prototype.triggerEvent = function() {
 
-        var eventName = '',
-            event;
+        // dispatch the concrete swipe event
+        this.el.dispatchEvent(new CustomEvent('swipe'+this.swipeDirection, {
+            cancelable: true
+        }));
 
-        if ( this.swipeDirection == 'left' ) {
-            eventName = 'swipeleft';
-        } else if ( this.swipeDirection == 'right' ) {
-            eventName = 'swiperight';
-        } else if ( this.swipeDirection == 'up' ) {
-            eventName = 'swipeup';
-        } else if ( this.swipeDirection == 'down' ) {
-            eventName = 'swipedown';
-        }
-        else {
-            return false;
-        }
-
-        if (document.createEvent) {
-            event = document.createEvent("HTMLEvents");
-            event.initEvent(eventName, true, true);
-        } else {
-            event = document.createEventObject();
-            event.eventType = eventName;
-        }
-
-        event.eventName = eventName;
-
-        if (document.createEvent) {
-            this.el.dispatchEvent(event);
-        } else {
-            this.el.fireEvent("on" + event.eventType, event);
-        }
-
-        return true;
+        // dispatch the general swipe event, direction is stored in detail property
+        this.el.dispatchEvent(new CustomEvent('swipe', {
+            cancelable  : true,
+            detail      : {
+                direction : this.swipeDirection
+            }
+        }));
     };
 
     window.Swipable = Swipable;
